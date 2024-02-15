@@ -1,0 +1,398 @@
+openapi: 3.0.0
+info:
+  title: Orla Club Api
+  description: API for managing Orla Club
+  version: 1.0.0
+servers:
+  - url: https://api-orlaclub.vercel.app/api
+paths:
+  /public/activities:
+    get:
+      summary: Get a list of all activities
+      tags:
+        - public
+      responses:
+        200:
+          description: List of activities
+          content:
+            application/json:
+              example:
+                activities:
+                  - id: 1
+                    activity: bike
+                    describe: Atividade de bicicleta
+                    pictures:
+                      - {id: "activity_cls29ynqj0003gyki1fvr34eo-1706735801607-luta1.jpg",
+                        url: "www.orlaclub.com/imagens/activity/activity_cls29ynqj0003gyki1fvr34eo-1706735801607-luta1.jpg"}
+                      - {id: "activity_cls29ynqj0003gyki1fvr34eo-1706735801999-luta1.jpg",
+                        url: "www.orlaclub.com/imagens/activity/activity_cls29ynqj0003gyki1fvr34eo-1706735809999-luta1.jpg"}
+                  - id: 2
+                    activity: swim
+                    describe: Atividade de natação
+                    pictures:
+                      - {id: "activity_cls29ynqj0003gyki1fvr34eo-1706735801607-luta1.jpg",
+                        url: "www.orlaclub.com/imagens/activity/activity_cls29ynqj0003gyki1fvr34eo-1706735801607-luta1.jpg"}
+                      - {id: "activity_cls29ynqj0003gyki1fvr34eo-1706735801999-luta1.jpg",
+                        url: "www.orlaclub.com/imagens/activity/activity_cls29ynqj0003gyki1fvr34eo-1706735809999-luta1.jpg"}
+  /admin/activities:
+    post:
+      summary: Create new activity
+      tags:
+        - activities
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activity:
+                  type: string
+                  description: Nome da atividade
+                describe:
+                  type: string
+                  description: Descrição da atividade
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: Requisição inválida
+    get:
+      summary: Get a list of all activities
+      tags:
+        - activities
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: List of activities
+          content:
+            application/json:
+              example:
+                activities:
+                  - id: 1
+                    activity: bike
+                    describe: Atividade de bicicleta
+                    pictures:
+                      - {id: "activity_cls29ynqj0003gyki1fvr34eo-1706735801607-luta1.jpg",
+                        url: "www.orlaclub.com/imagens/activity/activity_cls29ynqj0003gyki1fvr34eo-1706735801607-luta1.jpg"}
+                      - {id: "activity_cls29ynqj0003gyki1fvr34eo-1706735801999-luta1.jpg",
+                        url: "www.orlaclub.com/imagens/activity/activity_cls29ynqj0003gyki1fvr34eo-1706735809999-luta1.jpg"}
+                  - id: 2
+                    activity: swim
+                    describe: Atividade de natação
+                    pictures:
+                      - {id: "activity_cls29ynqj0003gyki1fvr34eo-1706735801607-luta1.jpg",
+                        url: "www.orlaclub.com/imagens/activity/activity_cls29ynqj0003gyki1fvr34eo-1706735801607-luta1.jpg"}
+                      - {id: "activity_cls29ynqj0003gyki1fvr34eo-1706735801999-luta1.jpg",
+                        url: "www.orlaclub.com/imagens/activity/activity_cls29ynqj0003gyki1fvr34eo-1706735809999-luta1.jpg"}
+  /admin/activities/{id}:
+    get:
+      summary: Get activity by ID
+      tags:
+        - activities
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da atividade
+          schema:
+            type: string
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              example:
+                id: '123'
+                activity: Nome da Atividade
+                describe: Descrição da Atividade
+                pictures:
+                  - {id: "activity_cls29ynqj0003gyki1fvr34eo-1706735801607-luta1.jpg",
+                    url: "www.orlaclub.com/imagens/activity/activity_cls29ynqj0003gyki1fvr34eo-1706735801607-luta1.jpg"}
+                  - {id: "activity_cls29ynqj0003gyki1fvr34eo-1706735801999-luta1.jpg",
+                    url: "www.orlaclub.com/imagens/activity/activity_cls29ynqj0003gyki1fvr34eo-1706735809999-luta1.jpg"}
+        404:
+          description: Atividade não encontrada
+    patch:
+      summary: Update activity by ID
+      tags:
+        - activities
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da atividade
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activity:
+                  type: string
+                  description: Nome da atividade
+                describe:
+                  type: string
+                  description: Descrição da atividade
+      responses:
+        200:
+          description: Sucesso
+        404:
+          description: Atividade não encontrada
+    delete:
+      summary: Delete activity by ID
+      tags:
+        - activities
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da atividade
+          schema:
+            type: string
+      responses:
+        200:
+          description: Sucesso
+        404:
+          description: Atividade não encontrada
+  /admin/users:
+    post:
+      summary: Create new user
+      tags:
+        - users
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email do usuário
+                name:
+                  type: string
+                  description: Nome do usuário
+                password:
+                  type: string
+                  description: Senha do usuário
+                describe:
+                  type: string
+                  description: Descrição da atividade
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: Requisição inválida
+    get:
+      summary: Get a list of all users
+      tags:
+        - users
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: List of users
+          content:
+            application/json:
+              example:
+                activities:
+                  - id: 1
+                    email: user1@gmail.com
+                    name: Users Name
+                    describe: dev
+                    createdAt: '2024-01-25T22:49:29.000Z'
+                    updatedAt: '2024-01-25T22:49:29.000Z'
+                  - id: 2
+                    email: user2@gmail.com
+                    name: Users Name
+                    describe: dev
+                    createdAt: '2024-01-25T22:49:29.000Z'
+                    updatedAt: '2024-01-25T22:49:29.000Z'
+  /admin/users/{id}:
+    get:
+      summary: Get user by ID
+      tags:
+        - users
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do usuário
+          schema:
+            type: string
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              example:
+                id: 2
+                email: user2@gmail.com
+                name: Users Name
+                describe: dev
+                createdAt: '2024-01-25T22:49:29.000Z'
+                updatedAt: '2024-01-25T22:49:29.000Z'
+        404:
+          description: Usuário não encontrada
+    patch:
+      summary: Update user by ID
+      tags:
+        - users
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da usuário
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email do usuário
+                name:
+                  type: string
+                  description: Nome do usuário
+                password:
+
+
+                  type: string
+                  description: Senha do usuário
+                describe:
+                  type: string
+                  description: Descrição da atividade
+      responses:
+        200:
+          description: Sucesso
+        404:
+          description: Usuário não encontrado
+    delete:
+      summary: Delete user by ID
+      tags:
+        - users
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da usuário
+          schema:
+            type: string
+      responses:
+        200:
+          description: Sucesso
+        404:
+          description: Usuário não encontrado
+  /auth:
+    post:
+      summary: Authenticate user
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email do usuário
+                password:
+                  type: string
+                  description: Senha do usuário
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              example:
+                access_token: >-
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoIjp7ImVtYWlsIjoiam9pcm5ldG9AZ21haWwuY29tIiwicGFzc3dvcmQiOiJqb2lyMTIzNDUifSwiaWF0IjoxNzA2MjY3NzE1LCJleHAiOjE3MDYyNzEzMTV9.0QgqNisCP_e8ptoUtQVzlwKD6f9DuUSQRdaR0d91H8c
+                expires_in: 3600
+                token_type: Bearer
+        400:
+          description: Requisição inválida
+  /admin/activities/pictures/{id}/upload:
+    post:
+      summary: Upload a picture for the given ID
+      tags:
+        - activities
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the activity
+        - name: file
+          in: formData
+          required: true
+          type: file
+      responses:
+        200:
+          description: Picture uploaded successfully
+          content:
+            application/json:
+              example:
+                url: "www.orlaclub.com/imagens/activity/activity_cls29ynqj0003gyki1fvr34eo-1706735801607-luta1.jpg"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                success: false
+                message: "Internal Server Error"
+  /admin/activities/pictures/{id}/remove:
+    delete:
+      summary: Remove a picture for the given ID
+      tags:
+        - activities
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the picture to be removed
+      responses:
+        204:
+          description: Picture deleted successfully
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                success: false
+                message: "Internal Server Error"
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
